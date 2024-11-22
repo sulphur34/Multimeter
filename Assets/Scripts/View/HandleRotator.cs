@@ -8,31 +8,28 @@ namespace View
     public class HandleRotator
     {
         private Transform _handleTransform;
-        private Dictionary<States, float> _rotationAngles;
+        private Dictionary<States, float> _rotationStates;
         private float _defaultRotationX;
         private float _defaultRotationY;
 
-        public HandleRotator(Transform handleTransform, Dictionary<States, Vector3> rotationPositions)
+        public HandleRotator(Transform handleTransform)
         {
             _handleTransform = handleTransform;
             var rotationVector = _handleTransform.rotation.eulerAngles;
             _defaultRotationX = rotationVector.x;
             _defaultRotationY = rotationVector.y;
-            _rotationAngles = GetRotationAngles(rotationPositions);
+            _rotationStates = new Dictionary<States, float>();
+        }
+
+        public void AddRotation(States state, Vector3 rotationPosition)
+        {
+            _rotationStates.Add(state, GetAngleFromDirection(rotationPosition));
         }
 
         public void SetRotationFromState(States state)
         {
-            float rotationAngle = _rotationAngles[state];
+            float rotationAngle = _rotationStates[state];
             _handleTransform.rotation = Quaternion.Euler(_defaultRotationX, _defaultRotationY, rotationAngle);
-        }
-
-        private Dictionary<States, float> GetRotationAngles(Dictionary<States, Vector3> rotationPositions)
-        {
-            return rotationPositions
-                .ToDictionary(
-                    rotationPosition => rotationPosition.Key,
-                    rotationPosition => GetAngleFromDirection(rotationPosition.Value));
         }
 
         private float GetAngleFromDirection(Vector3 targetPosition)

@@ -9,11 +9,11 @@ namespace View
     {
         private readonly string _zeroValueString = "0.00";
 
-        private List<UIReadingData> _readingDatas;
+        private List<UIReadingData> _readingDatas = new List<UIReadingData>();
 
-        public ReadingsUIVisualizer(List<UIReadingData> readingDatas)
+        public void AddReadingData(UIReadingData readingData)
         {
-            _readingDatas = readingDatas;
+            _readingDatas.Add(readingData);
         }
 
         public void VisualizeReadings(States state, string value)

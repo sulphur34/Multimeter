@@ -2,15 +2,9 @@ using UnityEngine;
 
 namespace View
 {
-    public class HandleHighlighter
+    public class HandleHighlighter : MonoBehaviour
     {
-        private GameObject _highlightCircle;
-
-        public HandleHighlighter(GameObject highlightCircle)
-        {
-            _highlightCircle = highlightCircle;
-        }
-
+        [SerializeField] private GameObject _highlightCircle;
         public void SetState(bool isActive)
         {
             _highlightCircle.SetActive(isActive);
