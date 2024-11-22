@@ -1,22 +1,23 @@
 using System;
 using Helpers;
+using View;
 
 namespace Model
 {
-    public class MultimeterMultimeterModel : IMultimeterModel, IMultimeterModelInfo
+    public class MultimeterMultimeterModel : IMultimeterModel
     {
         private readonly float _voltageDC = 0.01f;
-
-        private float _resistance;
-        private float _power;
+        private readonly float _resistance;
+        private readonly float _power;
+        private readonly IMultimeterView _view;
+        
         private States _state;
 
-        public event Action<ReadingsData> StateChanged;
-
-        public MultimeterMultimeterModel(float resistance, float power)
+        public MultimeterMultimeterModel(float resistance, float power, IMultimeterView view)
         {
             _resistance = resistance;
             _power = power;
+            _view = view;
         }
 
         public void SwitchState(States state)
@@ -49,8 +50,7 @@ namespace Model
                     throw new ArgumentException();
             }
 
-            var readingsData = new ReadingsData(readings, _state);
-            StateChanged?.Invoke(readingsData);
+            _view.Redraw(_state, readings);
         }
 
         private float GetCurrent()
