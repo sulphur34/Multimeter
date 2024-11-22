@@ -11,6 +11,7 @@ namespace Controller
         private States[] _states;
         private int _currentStateIndex;
         private bool _isAvailable;
+        private Camera _mainCamera;
 
         public void Initialize(IMultimeterModel multimeterModel)
         {
@@ -18,12 +19,21 @@ namespace Controller
             _multimeterModel = multimeterModel;
             _currentStateIndex = 0;
             SetState(_currentStateIndex);
+            _mainCamera = Camera.main;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-            ProcessInput(scrollValue);
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (!Physics.Raycast(ray, out RaycastHit hit))
+                return;
+
+            if (hit.collider.gameObject.GetComponent<Handle>())
+            {
+                float scrollValue = Input.GetAxis("Mouse ScrollWheel");
+                ProcessInput(scrollValue);
+            }
         }
 
         private void ProcessInput(float scrollValue)
