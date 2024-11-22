@@ -309,6 +309,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 915910292428328563, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_Name
+      value: SelectorWheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198858223798173887, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4198858223798173887, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ee65a23b2629aa545b12f9a5fe849073, type: 2}
+    - target: {fileID: 5378367889031992196, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_Name
+      value: TesterBody
+      objectReference: {fileID: 0}
     - target: {fileID: 8335587626984541547, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
       propertyPath: m_RootOrder
       value: 2
