@@ -7,6 +7,9 @@ namespace Helpers
 
         public static int Normalize(float value)
         {
+            if (value == 0)
+                return 0;
+            
             return value > 0 ? _ceiling : _floor;
         }
     }

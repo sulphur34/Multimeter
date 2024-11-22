@@ -12,7 +12,7 @@ namespace CompositionRoot
         [SerializeField] private float _powerValue = 400f;
         [SerializeField] private float _resistanceValue = 1000f;
 
-        private void Awake()
+        private void Start()
         {
             var multimeterView = new MultimeterView(_multimeterViewData);
             var multimeterModel = new MultimeterModel(_powerValue, _resistanceValue, multimeterView);

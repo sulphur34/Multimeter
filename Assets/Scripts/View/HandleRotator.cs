@@ -35,7 +35,7 @@ namespace View
         {
             Vector3 direction = targetPosition - _handleTransform.position;
             direction.z = 0;
-            return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            return Mathf.Atan2(direction.y, -direction.x) * Mathf.Rad2Deg;
         }
     }
 }

@@ -11,53 +11,45 @@ namespace Controller
     {
         private IMultimeterModel _multimeterModel;
         private States[] _states;
+        private int _arrayLength;
         private int _currentStateIndex;
         private bool _isAvailable;
         private Camera _mainCamera;
         private IMultimeterView _multimeterView;
-        private Coroutine _coroutine;
 
         public void Initialize(IMultimeterModel multimeterModel, IMultimeterView multimeterView)
         {
             _states = (States[])Enum.GetValues(typeof(States));
+            _arrayLength = _states.Length;
             _multimeterModel = multimeterModel;
             _multimeterView = multimeterView;
             _currentStateIndex = 0;
             SetState(_currentStateIndex);
             _mainCamera = Camera.main;
-            _coroutine = StartCoroutine(InputRoutine());
         }
 
-        private void OnDestroy()
+        private void Update()
         {
-            if(_coroutine != null)
-                StopCoroutine(_coroutine);
-        }
+            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        private IEnumerator InputRoutine()
-        {
-            while (enabled)
+            bool isHit = Physics.Raycast(ray, out RaycastHit hit);
+            _multimeterView.SetHandleActiveState(isHit);
+
+            if (!isHit)
+                return;
+
+            if (hit.collider.gameObject.GetComponent<Handle>())
             {
-                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-
-                bool isHit = Physics.Raycast(ray, out RaycastHit hit);
-                _multimeterView.SetHandleActiveState(isHit);
-
-                if (!isHit)
-                    continue;
-
-                if (hit.collider.gameObject.GetComponent<Handle>())
-                {
-                    float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-                    ProcessInput(scrollValue);
-                }
-
-                yield return null;
+                float scrollValue = Input.GetAxis("Mouse ScrollWheel");
+                ProcessInput(scrollValue);
             }
         }
 
         private void ProcessInput(float scrollValue)
         {
+            if(scrollValue == 0)
+                return;
+
             var stateChangeDelta = Normalizer.Normalize(scrollValue);
             _currentStateIndex = GetIndex(stateChangeDelta);
             SetState(_currentStateIndex);
@@ -65,9 +57,7 @@ namespace Controller
 
         private int GetIndex(int stateChangeDelta)
         {
-            return _currentStateIndex + stateChangeDelta >= _states.Length
-                ? 0
-                : _currentStateIndex + stateChangeDelta;
+            return (_currentStateIndex + stateChangeDelta + _arrayLength) % _arrayLength;
         }
 
         private void SetState(int stateIndex)

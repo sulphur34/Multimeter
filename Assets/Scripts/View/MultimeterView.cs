@@ -18,7 +18,9 @@ namespace View
 
             foreach (var stateView in viewData.StatesViewData)
             {
-                _readingsUIVisualizer.AddReadingData(new UIReadingData(stateView.State, stateView.ReadingsLabelUI));
+                if (stateView.State != States.Off)
+                    _readingsUIVisualizer.AddReadingData(new UIReadingData(stateView.State, stateView.ReadingsLabelUI));
+
                 _handleRotator.AddRotation(stateView.State, stateView.HandleRotationPoint.position);
             }
         }
@@ -28,9 +30,7 @@ namespace View
             string readingView = state == States.Off ? string.Empty : value.ToTwoDecimalString();
             _readingsScreenVisualizer.VisualizeReadings(readingView);
             _handleRotator.SetRotationFromState(state);
-
-            if (state != States.Off)
-                _readingsUIVisualizer.VisualizeReadings(state, readingView);
+            _readingsUIVisualizer.VisualizeReadings(state, readingView);
         }
 
         public void SetHandleActiveState(bool isActive)
