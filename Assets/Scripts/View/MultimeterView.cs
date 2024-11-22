@@ -27,8 +27,10 @@ namespace View
         {
             string readingView = state == States.Off ? string.Empty : value.ToTwoDecimalString();
             _readingsScreenVisualizer.VisualizeReadings(readingView);
-            _readingsUIVisualizer.VisualizeReadings(state, readingView);
             _handleRotator.SetRotationFromState(state);
+
+            if (state != States.Off)
+                _readingsUIVisualizer.VisualizeReadings(state, readingView);
         }
 
         public void SetHandleActiveState(bool isActive)

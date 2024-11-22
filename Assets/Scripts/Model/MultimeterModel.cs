@@ -4,16 +4,16 @@ using View;
 
 namespace Model
 {
-    public class MultimeterMultimeterModel : IMultimeterModel
+    public class MultimeterModel : IMultimeterModel
     {
         private readonly float _voltageDC = 0.01f;
         private readonly float _resistance;
         private readonly float _power;
         private readonly IMultimeterView _view;
-        
+
         private States _state;
 
-        public MultimeterMultimeterModel(float resistance, float power, IMultimeterView view)
+        public MultimeterModel(float resistance, float power, IMultimeterView view)
         {
             _resistance = resistance;
             _power = power;

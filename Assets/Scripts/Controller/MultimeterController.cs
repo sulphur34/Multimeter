@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using Helpers;
 using Model;
 using UnityEngine;
+using View;
 
 namespace Controller
 {
@@ -12,27 +14,45 @@ namespace Controller
         private int _currentStateIndex;
         private bool _isAvailable;
         private Camera _mainCamera;
+        private IMultimeterView _multimeterView;
+        private Coroutine _coroutine;
 
-        public void Initialize(IMultimeterModel multimeterModel)
+        public void Initialize(IMultimeterModel multimeterModel, IMultimeterView multimeterView)
         {
             _states = (States[])Enum.GetValues(typeof(States));
             _multimeterModel = multimeterModel;
+            _multimeterView = multimeterView;
             _currentStateIndex = 0;
             SetState(_currentStateIndex);
             _mainCamera = Camera.main;
+            _coroutine = StartCoroutine(InputRoutine());
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if(_coroutine != null)
+                StopCoroutine(_coroutine);
+        }
 
-            if (!Physics.Raycast(ray, out RaycastHit hit))
-                return;
-
-            if (hit.collider.gameObject.GetComponent<Handle>())
+        private IEnumerator InputRoutine()
+        {
+            while (enabled)
             {
-                float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-                ProcessInput(scrollValue);
+                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+
+                bool isHit = Physics.Raycast(ray, out RaycastHit hit);
+                _multimeterView.SetHandleActiveState(isHit);
+
+                if (!isHit)
+                    continue;
+
+                if (hit.collider.gameObject.GetComponent<Handle>())
+                {
+                    float scrollValue = Input.GetAxis("Mouse ScrollWheel");
+                    ProcessInput(scrollValue);
+                }
+
+                yield return null;
             }
         }
 
