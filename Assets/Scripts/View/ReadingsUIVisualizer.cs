@@ -7,7 +7,7 @@ namespace View
     {
         private readonly string _zeroValueString = "0.00";
 
-        private List<UIReadingData> _readingDatas = new List<UIReadingData>();
+        private List<UIReadingData> _readingDatas = new ();
 
         public void AddReadingData(UIReadingData readingData)
         {

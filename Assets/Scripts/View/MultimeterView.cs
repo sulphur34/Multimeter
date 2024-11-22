@@ -27,7 +27,7 @@ namespace View
 
         public void Redraw(States state, float value)
         {
-            string readingView = state == States.Off ? string.Empty : value.ToTwoDecimalString();
+            string readingView = state == States.Off ? string.Empty : value.ToString("F2");
             _readingsScreenVisualizer.VisualizeReadings(readingView);
             _handleRotator.SetRotationFromState(state);
             _readingsUIVisualizer.VisualizeReadings(state, readingView);

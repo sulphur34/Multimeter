@@ -1833,6 +1833,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8372202916741201174, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372202916741201174, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372202916741201174, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372202916741201174, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372202916741201174, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8711690545241413585, guid: feb2d5d23c56c50418039749cc009c4c, type: 3}
       propertyPath: m_Name
       value: Tester

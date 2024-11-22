@@ -5,18 +5,19 @@ namespace View
 {
     public class UIReadingData
     {
-        public readonly States State;
-        public readonly TextMeshProUGUI Text;
+        private readonly TextMeshProUGUI _text;
 
         public UIReadingData(States state, TextMeshProUGUI text)
         {
             State = state;
-            Text = text;
+            _text = text;
         }
+
+        public States State { get; private set; }
 
         public void SetText(string text)
         {
-            Text.text = text;
+            _text.text = text;
         }
     }
 }

@@ -3,8 +3,8 @@ namespace Helpers
     public enum States
     {
         Off,
-        VoltageDC,
         VoltageAC,
+        VoltageDC,
         Current,
         Resistance,
     }

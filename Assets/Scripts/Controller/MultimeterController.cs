@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Helpers;
 using Model;
 using UnityEngine;
@@ -31,7 +30,6 @@ namespace Controller
         private void Update()
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-
             bool isHit = Physics.Raycast(ray, out RaycastHit hit);
             _multimeterView.SetHandleActiveState(isHit);
 
@@ -47,7 +45,7 @@ namespace Controller
 
         private void ProcessInput(float scrollValue)
         {
-            if(scrollValue == 0)
+            if (scrollValue == 0)
                 return;
 
             var stateChangeDelta = Normalizer.Normalize(scrollValue);

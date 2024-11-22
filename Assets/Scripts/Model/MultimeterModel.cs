@@ -1,5 +1,6 @@
 using System;
 using Helpers;
+using UnityEngine;
 using View;
 
 namespace Model
@@ -51,6 +52,7 @@ namespace Model
             }
 
             _view.Redraw(_state, readings);
+            Debug.Log(_state.ToString() + "   " + readings);
         }
 
         private float GetCurrent()
