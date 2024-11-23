@@ -5,24 +5,24 @@ namespace View
 {
     public class ReadingsUIVisualizer
     {
-        private readonly string _zeroValueString = "0.00";
+        private const string ZeroValueString = "0.00";
 
-        private List<UIReadingData> _readingDatas = new ();
+        private readonly List<UIReadingData> _readingsData = new ();
 
         public void AddReadingData(UIReadingData readingData)
         {
-            _readingDatas.Add(readingData);
+            _readingsData.Add(readingData);
         }
 
         public void VisualizeReadings(States state, string value)
         {
             if (state == States.Off)
             {
-                _readingDatas.ForEach(data => data.SetText(string.Empty));
+                _readingsData.ForEach(data => data.SetText(string.Empty));
                 return;
             }
 
-            _readingDatas.ForEach(data => data.SetText(data.State == state ? value : _zeroValueString));
+            _readingsData.ForEach(data => data.SetText(data.State == state ? value : ZeroValueString));
         }
     }
 }

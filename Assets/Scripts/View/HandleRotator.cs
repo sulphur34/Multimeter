@@ -6,10 +6,10 @@ namespace View
 {
     public class HandleRotator
     {
-        private Transform _handleTransform;
-        private Dictionary<States, float> _rotationStates;
-        private float _defaultRotationX;
-        private float _defaultRotationY;
+        private readonly float _defaultRotationX;
+        private readonly float _defaultRotationY;
+        private readonly Transform _handleTransform;
+        private readonly Dictionary<States, float> _rotationStates;
 
         public HandleRotator(Transform handleTransform)
         {
@@ -27,13 +27,13 @@ namespace View
 
         public void SetRotationFromState(States state)
         {
-            float rotationAngle = _rotationStates[state];
+            var rotationAngle = _rotationStates[state];
             _handleTransform.rotation = Quaternion.Euler(_defaultRotationX, _defaultRotationY, rotationAngle);
         }
 
         private float GetAngleFromDirection(Vector3 targetPosition)
         {
-            Vector3 direction = targetPosition - _handleTransform.position;
+            var direction = targetPosition - _handleTransform.position;
             direction.z = 0;
             return Mathf.Atan2(direction.y, -direction.x) * Mathf.Rad2Deg;
         }

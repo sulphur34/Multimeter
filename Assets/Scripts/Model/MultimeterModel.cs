@@ -1,16 +1,15 @@
 using System;
 using Helpers;
-using UnityEngine;
 using View;
 
 namespace Model
 {
     public class MultimeterModel : IMultimeterModel
     {
-        private readonly float _voltageDC = 0.01f;
-        private readonly float _resistance;
         private readonly float _power;
+        private readonly float _resistance;
         private readonly IMultimeterView _view;
+        private readonly float _voltageDC = 0.01f;
 
         private States _state;
 
@@ -52,7 +51,6 @@ namespace Model
             }
 
             _view.Redraw(_state, readings);
-            Debug.Log(_state.ToString() + "   " + readings);
         }
 
         private float GetCurrent()

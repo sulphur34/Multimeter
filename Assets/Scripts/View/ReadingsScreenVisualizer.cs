@@ -4,7 +4,7 @@ namespace View
 {
     public class ReadingsScreenVisualizer
     {
-        private TextMeshProUGUI _readingsLabel;
+        private readonly TextMeshProUGUI _readingsLabel;
 
         public ReadingsScreenVisualizer(TextMeshProUGUI readingsLabel)
         {

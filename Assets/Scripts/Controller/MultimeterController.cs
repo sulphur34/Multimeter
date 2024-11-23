@@ -8,45 +8,58 @@ namespace Controller
 {
     public class MultimeterController : MonoBehaviour
     {
-        private IMultimeterModel _multimeterModel;
-        private States[] _states;
         private int _arrayLength;
         private int _currentStateIndex;
+        private Handle _handle;
         private bool _isAvailable;
         private Camera _mainCamera;
+        private IMultimeterModel _multimeterModel;
         private IMultimeterView _multimeterView;
+        private States[] _states;
 
-        public void Initialize(IMultimeterModel multimeterModel, IMultimeterView multimeterView)
+        private Ray MouseRay
+        {
+            get => _mainCamera.ScreenPointToRay(Input.mousePosition);
+        }
+
+        private void Update()
+        {
+            var isHit = Physics.Raycast(MouseRay, out var hit);
+            _multimeterView.SetHandleActiveState(isHit);
+
+            if (!isHit)
+            {
+                return;
+            }
+
+            if (!hit.collider.gameObject == _handle.gameObject)
+            {
+                return;
+            }
+
+            var scrollValue = Input.GetAxis("Mouse ScrollWheel");
+            ProcessInput(scrollValue);
+        }
+
+        public void Initialize(IMultimeterModel multimeterModel, IMultimeterView multimeterView, Handle handle)
         {
             _states = (States[])Enum.GetValues(typeof(States));
             _arrayLength = _states.Length;
             _multimeterModel = multimeterModel;
             _multimeterView = multimeterView;
+            _handle = handle;
             _currentStateIndex = 0;
             SetState(_currentStateIndex);
             _mainCamera = Camera.main;
         }
 
-        private void Update()
-        {
-            Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            bool isHit = Physics.Raycast(ray, out RaycastHit hit);
-            _multimeterView.SetHandleActiveState(isHit);
-
-            if (!isHit)
-                return;
-
-            if (hit.collider.gameObject.GetComponent<Handle>())
-            {
-                float scrollValue = Input.GetAxis("Mouse ScrollWheel");
-                ProcessInput(scrollValue);
-            }
-        }
 
         private void ProcessInput(float scrollValue)
         {
             if (scrollValue == 0)
+            {
                 return;
+            }
 
             var stateChangeDelta = Normalizer.Normalize(scrollValue);
             _currentStateIndex = GetIndex(stateChangeDelta);

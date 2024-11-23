@@ -4,10 +4,10 @@ namespace View
 {
     public class MultimeterView : IMultimeterView
     {
-        private ReadingsScreenVisualizer _readingsScreenVisualizer;
-        private HandleHighlighter _handleHighlighter;
-        private ReadingsUIVisualizer _readingsUIVisualizer;
-        private HandleRotator _handleRotator;
+        private readonly HandleHighlighter _handleHighlighter;
+        private readonly HandleRotator _handleRotator;
+        private readonly ReadingsScreenVisualizer _readingsScreenVisualizer;
+        private readonly ReadingsUIVisualizer _readingsUIVisualizer;
 
         public MultimeterView(MultimeterViewData viewData)
         {
@@ -19,7 +19,9 @@ namespace View
             foreach (var stateView in viewData.StatesViewData)
             {
                 if (stateView.State != States.Off)
+                {
                     _readingsUIVisualizer.AddReadingData(new UIReadingData(stateView.State, stateView.ReadingsLabelUI));
+                }
 
                 _handleRotator.AddRotation(stateView.State, stateView.HandleRotationPoint.position);
             }
@@ -27,7 +29,7 @@ namespace View
 
         public void Redraw(States state, float value)
         {
-            string readingView = state == States.Off ? string.Empty : value.ToString("F2");
+            var readingView = state == States.Off ? string.Empty : value.ToString("F2");
             _readingsScreenVisualizer.VisualizeReadings(readingView);
             _handleRotator.SetRotationFromState(state);
             _readingsUIVisualizer.VisualizeReadings(state, readingView);

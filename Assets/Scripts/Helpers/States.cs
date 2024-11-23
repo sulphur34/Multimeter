@@ -6,6 +6,6 @@ namespace Helpers
         VoltageAC,
         VoltageDC,
         Current,
-        Resistance,
+        Resistance
     }
 }
